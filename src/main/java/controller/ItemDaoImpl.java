@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ItemDaoImpl extends ConnectionDAO implements ItemDao {
 
-    public void saveItem(List<Item> ItemList) {
+    public void save(List<Item> ItemList) {
         try {
             Connection con = ConnectionDAO.getConnection();
             for(Item b: ItemList) {
@@ -31,7 +31,7 @@ public class ItemDaoImpl extends ConnectionDAO implements ItemDao {
         }
     }
 
-    public List<Item> getAllItems() {
+    public List<Item> getAll() {
         try {
             Connection connection = ConnectionDAO.getConnection();
             Statement stmt = connection.createStatement();
@@ -57,7 +57,7 @@ public class ItemDaoImpl extends ConnectionDAO implements ItemDao {
         return null;
     }
 
-    public boolean updateItem(Item bookObj, int id){
+    public boolean update(Item bookObj, int id){
         try {
             Connection connection = ConnectionDAO.getConnection();
             PreparedStatement ps = connection.prepareStatement("UPDATE item SET name=?, price=?  WHERE id=?");
@@ -82,12 +82,9 @@ public class ItemDaoImpl extends ConnectionDAO implements ItemDao {
         return false;
     }
 
-    @Override
-    public List<Item> removeItemById(int id) {
-        return null;
-    }
 
-    public boolean deleteItem(int id) {
+
+    public boolean delete(int id) {
         try {
             Connection connection = ConnectionDAO.getConnection();
             PreparedStatement ps = connection.prepareStatement("DELETE FROM item WHERE id=?");

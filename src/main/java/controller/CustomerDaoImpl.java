@@ -17,7 +17,7 @@ public class CustomerDaoImpl extends ConnectionDAO implements CustomerDao {
 
 
 
-    public void saveCustomer(List<Customer> CustomerList) {
+    public void save(List<Customer> CustomerList) {
         try {
             Connection con = ConnectionDAO.getConnection();
             for(Customer b: CustomerList) {
@@ -37,7 +37,7 @@ public class CustomerDaoImpl extends ConnectionDAO implements CustomerDao {
         }
     }
 
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAll() {
         try {
             Connection connection = ConnectionDAO.getConnection();
             Statement stmt = connection.createStatement();
@@ -62,7 +62,7 @@ public class CustomerDaoImpl extends ConnectionDAO implements CustomerDao {
         return null;
     }
 
-    public boolean updateCustomer(Customer bookObj, int id){
+    public boolean update(Customer bookObj, int id){
         try {
             Connection connection = ConnectionDAO.getConnection();
             PreparedStatement ps = connection.prepareStatement("UPDATE customer SET fname=?, lname=?, email=? WHERE id=?");
@@ -87,24 +87,24 @@ public class CustomerDaoImpl extends ConnectionDAO implements CustomerDao {
     }
 
 
-    @Override
-    public List<Customer> getCustomerById(int id) {
 
+    public Customer getCustomerById(int id) {
+        Customer b = new Customer();
         try {
         Connection connection = ConnectionDAO.getConnection();
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM customer where id = ?");
-            List list = new ArrayList<>();
+
         while(rs.next())
         {
-            Customer b = new Customer();
+
             b.setId(rs.getInt("id"));
             b.setFirstName( rs.getString("fname") );
             b.setLastName( rs.getString("lName") );
             b.setEmail( rs.getString("email") );
-            list.add(b);
+
         }
-      return list;
+      return b;
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -117,7 +117,7 @@ public class CustomerDaoImpl extends ConnectionDAO implements CustomerDao {
 
 
 
-    public boolean deleteCustomer(int id) {
+    public boolean delete(int id) {
         try {
             Connection connection = ConnectionDAO.getConnection();
             PreparedStatement ps = connection.prepareStatement("DELETE FROM customer WHERE id=?");
